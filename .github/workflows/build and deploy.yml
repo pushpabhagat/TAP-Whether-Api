@@ -11,7 +11,7 @@ env:
   AZURE_WEBAPP_NAME: "tapweatherapi"
   AZURE_WEBAPP_PACKAGE_PATH: "./Weatherapi/publish"
   DOTNET_VERSION: "8.0.410"
-  SOLUTION_PATH: "weatherapi.sln"
+  SOLUTION_PATH: "/TAP-Whether-Api/weatherapi/weatherapi/weatherapi.sln"
   API_PROJECT_PATH: "/TAP-Whether-Api/weatherapi"
   PUBLISH_DIR: "./publish"
 
@@ -30,7 +30,7 @@ jobs:
                dotnet-version : ${{env.DOTNET_VERSION}}
 
        - name : Restore dependencies
-         run :  dotnet restore weatherapi.sln --verbosity detailed
+         run :  dotnet restore /TAP-Whether-Api/weatherapi/weatherapi/weatherapi.sln --verbosity detailed
 
        - name : Build
          run :  dotnet restore ${{env.SOLUTION_PATH}}  --configuration Release --no-restore
