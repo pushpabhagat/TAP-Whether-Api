@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
   push:
    branches:
-      - development
+      - main
 
 
 env:
   AZURE_WEBAPP_NAME: "WeatherAppService"
   AZURE_WEBAPP_PACKAGE_PATH: "./Weather.Api/publish"
-  DOTNET_VERSION: "8.x"
+  DOTNET_VERSION: "8.0"
   SOLUTION_PATH: "Weather.Api.sln"
   API_PROJECT_PATH: "Weather.Api"
   PUBLISH_DIR: "./publish"
@@ -27,7 +27,7 @@ jobs:
        - name : Setup .NET
          uses : actions/setup-dotnet@v4
          with :
-           dotnet-version :${{env.DOTNET_VERSION}}
+               dotnet-version : ${{env.DOTNET_VERSION}}
 
        - name : Restore
          run :  dotnet restore ${{env.SOLUTION_PATH}}
