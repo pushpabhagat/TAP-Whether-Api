@@ -9,10 +9,10 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: "WeatherAppService"
-  AZURE_WEBAPP_PACKAGE_PATH: "./Weather.Api/publish"
+  AZURE_WEBAPP_PACKAGE_PATH: "./Weatherapi/publish"
   DOTNET_VERSION: "8.0"
-  SOLUTION_PATH: "Weather.Api.sln"
-  API_PROJECT_PATH: "Weather.Api"
+  SOLUTION_PATH: "Weatherapi.sln"
+  API_PROJECT_PATH: "Weatherapi"
   PUBLISH_DIR: "./publish"
 
 
