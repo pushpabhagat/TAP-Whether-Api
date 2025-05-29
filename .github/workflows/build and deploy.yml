@@ -29,6 +29,9 @@ jobs:
          with :
                dotnet-version : ${{env.DOTNET_VERSION}}
 
+       - name : Run MSBuild Help
+         run : dotnet msbuild -help
+        
        - name : Restore dependencies
          run :  dotnet restore /TAP-Whether-Api/weatherapi/weatherapi/weatherapi.sln --verbosity detailed
 
