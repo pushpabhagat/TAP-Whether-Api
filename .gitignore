@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/weatherapi/weatherapi/obj
+/weatherapi/.vs/weatherapi
+/.vs
