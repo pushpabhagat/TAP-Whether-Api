@@ -30,7 +30,7 @@ jobs:
                dotnet-version : ${{env.DOTNET_VERSION}}
         
        - name : Restore dependencies
-         run :  dotnet restore /TAP-Whether-Api/weatherapi/weatherapi/weatherapi.sln --verbosity detailed
+         run :  dotnet restore ./weatherapi/weatherapi.sln --verbosity detailed
 
        - name : Build
          run :  dotnet restore ${{env.SOLUTION_PATH}}  --configuration Release --no-restore
