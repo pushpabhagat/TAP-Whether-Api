@@ -27,7 +27,7 @@ jobs:
         run: dotnet build ./weatherapi/weatherapi.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ../weatherapi
+        run: dotnet publish ./weatherapi  --configuration Release --no-restore --no-build --property:PublishDir=./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
