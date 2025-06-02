@@ -13,7 +13,7 @@ env:
   DOTNET_VERSION: "8.0"
   SOLUTION_PATH: "./weatherapi/weatherapi.sln"
   API_PROJECT_PATH: "./weatherapi"
-  PUBLISH_DIR: "./publish"
+  PUBLISH_DIR: "./weatherapi/publish"
 
 
 jobs:
