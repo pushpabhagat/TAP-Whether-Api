@@ -5,7 +5,7 @@ on:
     branches: [ main ]
  
 env:
-  AZURE_WEBAPP_NAME: DotNetWeb
+  AZURE_WEBAPP_NAME: weatherapi
   AZURE_WEBAPP_PACKAGE_PATH: '.' # Set this to the path to your web app project, defaults to the repository root:
   DOTNET_VERSION: '8.0' # The .NET SDK version to use
 
