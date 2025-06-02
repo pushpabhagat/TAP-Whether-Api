@@ -28,8 +28,8 @@ jobs:
       
     - name: Test
       run: |
-        cd DotNet.WebApp.Tests
-        dotnet test --no-restore --verbosity normal
+        
+        dotnet test ./weatherapi/weatherapi.sln --no-restore --verbosity normal
     - uses: azure/webapps-deploy@v2
       name: Deploy
       with:
