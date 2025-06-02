@@ -24,7 +24,7 @@ jobs:
       run :  dotnet restore ./weatherapi/weatherapi.sln --verbosity detailed
 
     - name: Build
-      run :  dotnet build --configuration Release --no-restore
+      run :  dotnet build ./weatherapi/weatherapi.sln --configuration Release --no-restore
       
     - name: Test
       run: |
