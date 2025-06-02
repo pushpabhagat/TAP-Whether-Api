@@ -27,13 +27,13 @@ jobs:
         run: dotnet build ./weatherapi/weatherapi.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ./WWWROOT  --configuration Release --no-restore --no-build --property:PublishDir=./WWWROOT
+        run: dotnet publish ./  --configuration Release --no-restore --no-build --property:PublishDir=./
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./WWWROOT
+          path: ./
 
   deploy:
     runs-on: windows-latest
