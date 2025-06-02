@@ -6,7 +6,7 @@ on:
       - main
  
 env:
-  SOLUTION_LOCATION: './weatherapi.sln'
+  SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
   PROJECT_LOCATION: './weatherapi/weatherapi.csproj'
   APPLICATION_NAME: 'tapweatherapi'
  
