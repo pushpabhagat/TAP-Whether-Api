@@ -24,6 +24,13 @@ jobs:
         run: dotnet build ${{ env.SOLUTION_LOCATION }} -c Release
       - name: Publish
         run: dotnet publish ${{ env.PROJECT_LOCATION }} -c Release -o ${{ github.workspace }}/wwwroot
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: ./weatherapi
+
  
   deploy:
     runs-on: windows-latest
