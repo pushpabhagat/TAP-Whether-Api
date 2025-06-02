@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: output
-          path: ./weatherapi
+          path: ${{ github.workspace }}/wwwroot
 
  
   deploy:
@@ -40,19 +40,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: output
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E2C164A07F524E0EA6FC54FC55ED552F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_162AC39B09944D58972DBA6AF18278F4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_69FE8F38B96C439281F4BD7CF0898DFB }}
-
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.APPLICATION_NAME }}
           slot-name: 'Production'
+          publish-profile: ${{ secrets.PUSHSECRET }}
           package: ${{ github.workspace }}/wwwroot
  
