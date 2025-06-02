@@ -23,13 +23,13 @@ jobs:
       - name: Build
         run: dotnet build ${{ env.SOLUTION_LOCATION }} -c Release
       - name: Publish
-        run: dotnet publish ${{ env.PROJECT_LOCATION }} -c Release -o ${{ github.workspace }}/wwwroot
+        run: dotnet publish ${{ env.PROJECT_LOCATION }} -c Release -o ${{ github.workspace }}/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: output
-          path: ${{ github.workspace }}/wwwroot
+          path: ${{ github.workspace }}/
 
  
   deploy:
