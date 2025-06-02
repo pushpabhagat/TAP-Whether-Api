@@ -24,16 +24,16 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build ${{env.DOTNET_ROOT}} --configuration Release
+        run: dotnet build ./weatherapi/weatherapi.sln --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ${{env.DOTNET_ROOT}}  --configuration Release --no-restore --no-build --property:PublishDir=${{env.DOTNET_ROOT}}
+        run: dotnet publish ./WWWROOT  --configuration Release --no-restore --no-build --property:PublishDir=./WWWROOT
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}
+          path: ./WWWROOT
 
   deploy:
     runs-on: windows-latest
