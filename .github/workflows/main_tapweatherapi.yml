@@ -7,7 +7,7 @@ on:
  
 env:
   SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
-  PROJECT_LOCATION: './weatherapi/weatherapi.csproj'
+  PROJECT_LOCATION: './weatherapi'
   APPLICATION_NAME: 'tapweatherapi'
  
 jobs:
