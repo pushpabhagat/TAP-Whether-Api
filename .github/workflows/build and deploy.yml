@@ -24,7 +24,7 @@ jobs:
       run :  dotnet restore ./weatherapi/weatherapi.sln --verbosity detailed
 
     - name: Build
-      run :  dotnet build ./weatherapi/weatherapi.sln  --configuration Release --runtime linux-x64 --source c:\packages\mypackages -p:Version=1.2.3.4     
+      run :  dotnet build --configuration Release --runtime linux-x64 --source c:\packages\mypackages -p:Version=1.2.3.4     
       
     - name: Test
       run: |
