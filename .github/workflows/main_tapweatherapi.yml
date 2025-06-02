@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: dotnet build ${{ env.SOLUTION_LOCATION }} -c Release
       - name: Publish
-        run: dotnet publish ${{ env.PROJECT_LOCATION }} -c Release -o ${{ github.workspace }}/output
+        run: dotnet publish ${{ env.PROJECT_LOCATION }} -c Release -o ${{ github.workspace }}/wwwroot
  
   deploy:
     runs-on: windows-latest
@@ -47,5 +47,5 @@ jobs:
         with:
           app-name: ${{ env.APPLICATION_NAME }}
           slot-name: 'Production'
-          package: ${{ github.workspace }}/output
+          package: ${{ github.workspace }}/wwwroot
  
