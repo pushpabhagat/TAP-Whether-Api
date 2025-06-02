@@ -8,6 +8,7 @@ env:
   AZURE_WEBAPP_NAME: DotNetWeb
   AZURE_WEBAPP_PACKAGE_PATH: '.' # Set this to the path to your web app project, defaults to the repository root:
   DOTNET_VERSION: '8.0' # The .NET SDK version to use
+
 jobs:
   publish:
  
@@ -34,5 +35,5 @@ jobs:
       name: Deploy
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.PUSHSECRET}}
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dotnet-webapp'
