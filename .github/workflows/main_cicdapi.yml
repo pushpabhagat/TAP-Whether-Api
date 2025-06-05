@@ -48,5 +48,5 @@ jobs:
         with:
           app-name: ${{ env.APPLICATION_NAME }}
           slot-name: 'Production'
-          publish-profile: ${{ secrets.PUSHSECRET }}
+          publish-profile: ${{ secrets.CICDSECRET }}
           package: ${{ github.workspace }}/
