@@ -4,12 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - './weatherapi/cicdapi/**'
       
 env:
   SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
-  PROJECT_LOCATION: './weatherapi'
+  PROJECT_LOCATION: './cicdapi'
   APPLICATION_NAME: 'tapcicdapi'
  
 jobs:
