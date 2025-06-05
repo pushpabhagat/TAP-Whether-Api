@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - './weatherapi/cicdapi/**'
  
 env:
   SOLUTION_LOCATION: './weatherapi/cicd.sln'
