@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "weatherapi\\weatherapi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "cicdapi\\cicdapi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

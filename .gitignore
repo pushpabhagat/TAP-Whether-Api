@@ -5,3 +5,6 @@
 /weatherapi/weatherapi/obj
 /weatherapi/.vs/weatherapi
 /.vs
+/weatherapi/cicdapi/bin/Debug/net8.0
+/weatherapi/cicdapi/obj
+/weatherapi/weatherapi/bin/Debug/net8.0
