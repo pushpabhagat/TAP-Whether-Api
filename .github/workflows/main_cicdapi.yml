@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - './weatherapi/cicdapi/**'
- 
+      
 env:
   SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
   PROJECT_LOCATION: './weatherapi'
