@@ -7,7 +7,7 @@
         "Action": "Start"
       },
       {
-        "Path": "cicdapi\\cicdapi.csproj",
+        "Path": "..\\cicdapi\\cicdapi.csproj",
         "Action": "Start"
       }
     ]
