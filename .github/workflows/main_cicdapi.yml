@@ -9,7 +9,7 @@ on:
       
 env:
   SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
-  PROJECT_LOCATION: './weatherapi'
+  PROJECT_LOCATION: './weatherapi/cicdapi'
   APPLICATION_NAME: 'tapcicdapi'
  
 jobs:
