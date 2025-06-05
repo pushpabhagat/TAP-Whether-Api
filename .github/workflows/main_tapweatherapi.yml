@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-    
+    paths:
+      - './weatherapi/weatherapi/**'
  
 env:
   SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
