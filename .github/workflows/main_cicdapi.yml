@@ -8,7 +8,7 @@ on:
       - './weatherapi/cicdapi/**'
  
 env:
-  SOLUTION_LOCATION: './weatherapi/cicd.sln'
+  SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
   PROJECT_LOCATION: './weatherapi'
   APPLICATION_NAME: 'tapcicdapi'
  
