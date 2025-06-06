@@ -73,31 +73,22 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
- 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
- 
-    - name: Restore dependencies - Project 1
-      run: dotnet restore ./weatherapi/weatherapi/weatherapi.csproj
- 
-    - name: Build - Project 1
-      run: dotnet build ./weatherapi/weatherapi/weatherapi.csproj --configuration Release --no-restore
-   
-    - name: dotnet publish
-      run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
 
-    - name: Upload Project 1 Artifact
-      uses: actions/upload-artifact@v4
-      with:
-          name: project1-artifact
-          path: ./weatherapi/weatherapi/weatherapi.csproj  # Adjust the path as needed
-          
-    - name: Test - Project 1
-      run: dotnet test ./weatherapi/weatherapi/weatherapi.csproj --no-build --verbosity normal
+      - name: Build
+        run: dotnet build ./weatherapi/weatherapi/weatherapi.csproj -c Release
+      - name: Publish
+        run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj -c Release -o ${{ github.workspace }}/
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: ${{ github.workspace }}/
+
       
   build_project2:
     needs: detect_changes
@@ -136,27 +127,18 @@ jobs:
     runs-on: ubuntu-latest
     if: success()  # Only run if the build was successful
     steps:
-      - name: Download Project 1 artifact
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: project1-artifact
-          path: ./weatherapi/weatherapi/weatherapi.csproj
+          name: output
 
-      - name: Create Release Directory
-        run: mkdir -p ./release/project1
-
-      - name: Release Project 1
-        run: |
-          echo "Releasing Project 1..."
-          ls -l ./release/project1
-          
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'tapweatherapi'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.PUSHSECRET }}
-          package: .
+          package: ${{ github.workspace }}/
 
      
   # Release job for Project 2
