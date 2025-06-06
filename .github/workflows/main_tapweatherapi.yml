@@ -73,22 +73,36 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
+      - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: true  # Include this if you are using submodules
 
-      - name: Build
-        run: dotnet build weatherapi/weatherapi/weatherapi.csproj -c Release
-        
-      - name: Publish
-        run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj -c Release -o ${{ github.workspace }}/
+    - name: List Files After Checkout
+      run: ls -R ./weatherapi  # List contents to verify the path
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: output
-          path: ${{ github.workspace }}/
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies - Project 1
+      run: dotnet restore ./weatherapi/weatherapi/weatherapi.csproj
+
+    - name: Build - Project 1
+      run: dotnet build ./weatherapi/weatherapi/weatherapi.csproj -c Release
+
+    - name: Publish - Project 1
+      run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj -c Release --output ./release/project1
+
+    - name: Upload Project 1 Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: project1-artifact
+        path: ./release/project1
+
+    - name: Test - Project 1
+      run: dotnet test ./weatherapi/weatherapi/weatherapi.csproj --no-build --verbosity normal
 
       
   build_project2:
