@@ -142,8 +142,14 @@ jobs:
           name: project1-artifact
           path: ./weatherapi/weatherapi/weatherapi.csproj
 
-     
+      - name: Create Release Directory
+        run: mkdir -p ./release/project1
 
+      - name: Release Project 1
+        run: |
+          echo "Releasing Project 1..."
+          ls -l ./release/project1
+          
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -165,6 +171,9 @@ jobs:
           name: project2-artifact
           path: ./cicdapi/cicdapi.csproj
 
+      - name: Create Release Directory
+        run: mkdir -p ./release/project2
+        
       - name: Release Project 2
         run: |
           echo "Releasing Project 2..."
