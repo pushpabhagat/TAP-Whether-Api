@@ -46,7 +46,7 @@ jobs:
               echo "Matched weatherapi directory for file: $file"
               project1_changed=true
             fi
-            if [[ "$file" == weatherapi/* ]]; then
+            if [[ "$file" == cicdapi/* ]]; then
               echo "Matched weatherapi directory for file: $file"
               project1_changed=true
             fi
@@ -79,7 +79,8 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build
-        run: dotnet build ./weatherapi/weatherapi/weatherapi.csproj -c Release
+        run: dotnet build weatherapi/weatherapi/weatherapi.csproj -c Release
+        
       - name: Publish
         run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj -c Release -o ${{ github.workspace }}/
 
