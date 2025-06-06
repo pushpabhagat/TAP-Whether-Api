@@ -86,6 +86,12 @@ jobs:
  
     - name: Build - Project 1
       run: dotnet build ./weatherapi/weatherapi/weatherapi.csproj --configuration Release --no-restore
+
+    - name: Upload Project 1 Artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: project1-artifact
+          path: ./weatherapi/weatherapi/weatherapi.csproj  # Adjust the path as needed
    
     - name: Test - Project 1
       run: dotnet test ./weatherapi/weatherapi/weatherapi.csproj --no-build --verbosity normal
