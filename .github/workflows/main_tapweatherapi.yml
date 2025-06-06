@@ -1,51 +1,125 @@
-name: Build and Deploy to Azure App Service
+name: Multi-Project Build and Release
  
 on:
   push:
     branches:
       - main
- 
-env:
-  SOLUTION_LOCATION: './weatherapi/weatherapi.sln'
-  PROJECT_LOCATION: './weatherapi'
-  APPLICATION_NAME: 'tapweatherapi'
+    paths:
+      - 'path/to/project1/**'
+      - 'path/to/project2/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'path/to/project1/**'
+      - 'path/to/project2/**'
  
 jobs:
-  build:
-    runs-on: windows-latest
+  detect_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      project1_changed: ${{ steps.detect.outputs.project1_changed }}
+      project2_changed: ${{ steps.detect.outputs.project2_changed }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
-
-      - name: Build
-        run: dotnet build ${{ env.SOLUTION_LOCATION }} -c Release
-      - name: Publish
-        run: dotnet publish ${{ env.PROJECT_LOCATION }} -c Release -o ${{ github.workspace }}/
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: output
-          path: ${{ github.workspace }}/
-
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
  
-  deploy:
-    runs-on: windows-latest
-    needs: build
+    - name: Detect changed projects
+      id: detect
+      run: |
+        echo "Detecting modified files compared to previous commit"
+        # Get list of changed files between last two commits on branch
+        CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+ 
+        echo "Changed files:"
+        echo "$CHANGED_FILES"
+ 
+        project1_changed=false
+        project2_changed=false
+ 
+        for file in $CHANGED_FILES; do
+          if [[ "$file" == path/to/project1/* ]]; then
+            project1_changed=true
+          fi
+          if [[ "$file" == path/to/project2/* ]]; then
+            project2_changed=true
+          fi
+        done
+ 
+        echo "::set-output name=project1_changed::$project1_changed"
+        echo "::set-output name=project2_changed::$project2_changed"
+ 
+  build_project1:
+    needs: detect_changes
+    if: needs.detect_changes.outputs.project1_changed == 'true'
+    runs-on: ubuntu-latest
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: output
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.APPLICATION_NAME }}
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.PUSHSECRET }}
-          package: ${{ github.workspace }}/
+    - name: Checkout code
+      uses: actions/checkout@v3
  
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+ 
+    - name: Restore dependencies - Project 1
+      run: dotnet restore path/to/project1/project1.csproj
+ 
+    - name: Build - Project 1
+      run: dotnet build path/to/project1/project1.csproj --configuration Release --no-restore
+ 
+    - name: Test - Project 1
+      run: dotnet test path/to/project1/project1.csproj --no-build --verbosity normal
+ 
+  build_project2:
+    needs: detect_changes
+    if: needs.detect_changes.outputs.project2_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+ 
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+ 
+    - name: Restore dependencies - Project 2
+      run: dotnet restore path/to/project2/project2.csproj
+ 
+    - name: Build - Project 2
+      run: dotnet build path/to/project2/project2.csproj --configuration Release --no-restore
+ 
+    - name: Test - Project 2
+      run: dotnet test path/to/project2/project2.csproj --no-build --verbosity normal
+ 
+  release:
+    needs:
+      - detect_changes
+      - build_project1
+      - build_project2
+    if: >
+      needs.detect_changes.outputs.project1_changed == 'true' ||
+      needs.detect_changes.outputs.project2_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+ 
+    - name: Create Release Notes
+      run: echo "Release triggered due to changes in projects."
+ 
+    # Example: Create GitHub Release (adjust as needed - requires repo token)
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      if: github.event_name == 'push'
+      with:
+        tag_name: 'v1.${{ github.run_number }}'
+        name: 'Automated Release v1.${{ github.run_number }}'
+        body: 'This release contains builds for updated projects.'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+    # You can add artifact publishing, deployment steps etc. here
