@@ -40,21 +40,26 @@ jobs:
           project2_changed=false
 
           for file in $CHANGED_FILES; do
-            if [[ "$file" == "wheatherapi/**" ]]; then
+            if [[ "$file" == *"wheatherapi.csproj"* ]]; then
               project1_changed=true
             fi
-            if [[ "$file" == "cicdapi/**" ]]; then
+            if [[ "$file" == *"cicdapi.csproj"* ]]; then
               project2_changed=true
             fi
           done
 
-          # Set outputs for the job using environment files
-          echo "project1_changed=$project1_changed" >> $GITHUB_ENV
-          echo "project2_changed=$project2_changed" >> $GITHUB_ENV
+          # Set outputs for the job only if they are true
+          if [ "$project1_changed" = true ]; then
+            echo "project1_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "project1_changed=false" >> $GITHUB_OUTPUT
+          fi
 
-          # Set outputs for the job
-          echo "project1_changed=$project1_changed" >> $GITHUB_OUTPUT
-          echo "project2_changed=$project2_changed" >> $GITHUB_OUTPUT
+          if [ "$project2_changed" = true ]; then
+            echo "project2_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "project2_changed=false" >> $GITHUB_OUTPUT
+          fi
 
   build_project1:
     needs: detect_changes
