@@ -6,12 +6,13 @@ on:
       - main
     paths:
        - 'weatherapi/**'
+       - 'cicdapi/**'
   pull_request:
     branches:
       - main
     paths:
-       - './wheatherapi/**'
-       - './cicdapi/**'
+       - 'wheatherapi/**'
+       - 'cicdapi/**'
  
 jobs:
   detect_changes:
