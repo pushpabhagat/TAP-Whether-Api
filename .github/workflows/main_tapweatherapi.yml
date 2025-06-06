@@ -63,7 +63,7 @@ jobs:
 
   build_project1:
     needs: detect_changes
-    if: needs.detect_changes.outputs.project1_changed == 'true'
+    if: needs.detect_changes.outputs.project1_changed == 'project1_changed'
     runs-on: ubuntu-latest
     
     steps:
