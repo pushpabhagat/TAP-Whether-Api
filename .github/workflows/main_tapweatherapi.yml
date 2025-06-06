@@ -78,13 +78,13 @@ jobs:
         dotnet-version: '8.0.x'
  
     - name: Restore dependencies - Project 1
-      run: dotnet restore ./wheather/wheather/wheatherapi.csproj
+      run: dotnet restore ./weather/weather/weatherapi.csproj
  
     - name: Build - Project 1
-      run: dotnet build ./wheather/wheather/wheatherapi.csproj --configuration Release --no-restore
+      run: dotnet build ./weather/weather/weatherapi.csproj --configuration Release --no-restore
  
     - name: Test - Project 1
-      run: dotnet test ./wheather/wheather/wheatherapi.csproj --no-build --verbosity normal
+      run: dotnet test ./weather/weather/weatherapi.csproj --no-build --verbosity normal
  
   build_project2:
     needs: detect_changes
