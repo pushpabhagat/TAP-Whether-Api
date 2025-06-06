@@ -26,46 +26,42 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Detect changed projects
+      - name: Detect changed projects with debug
         id: detect
         run: |
           echo "Detecting modified files compared to previous commit"
-          # Get list of changed files between last two commits on branch
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
 
           echo "Changed files:"
-          echo "$CHANGED_FILES"
+          for f in $CHANGED_FILES; do
+            echo " - $f"
+          done
 
           project1_changed=false
           project2_changed=false
 
           for file in $CHANGED_FILES; do
-            if [[ "$file" == "weatherapi/*" ]]; then
+            echo "Checking file: $file"
+            if [[ "$file" == weatherapi/* ]]; then
+              echo "Matched weatherapi directory for file: $file"
               project1_changed=true
-              echo "project1_changed=true" >> $GITHUB_OUTPUT
             fi
             if [[ "$file" == *"weatherapi.csproj"* ]]; then
+              echo "Matched weatherapi.csproj for file: $file"
               project1_changed=true
-              echo "project1_changed=true" >> $GITHUB_OUTPUT
             fi
             if [[ "$file" == *"cicdapi.csproj"* ]]; then
+              echo "Matched cicdapi.csproj for file: $file"
               project2_changed=true
-              echo "project2_changed=true" >> $GITHUB_OUTPUT
             fi
           done
 
-          # Set outputs for the job only if they are true
-         # if [ "$project1_changed" = true ]; then
-         #   echo "project1_changed=true" >> $GITHUB_OUTPUT
-         # else
-        #    echo "project1_changed=false" >> $GITHUB_OUTPUT
-       #   fi
+          echo "Final project1_changed: $project1_changed"
+          echo "Final project2_changed: $project2_changed"
 
-          # if [ "$project2_changed" = true ]; then
-           # echo "project2_changed=true" >> $GITHUB_OUTPUT
-          # else
-          #  echo "project2_changed=false" >> $GITHUB_OUTPUT
-          # fi
+          echo "project1_changed=$project1_changed" >> $GITHUB_OUTPUT
+          echo "project2_changed=$project2_changed" >> $GITHUB_OUTPUT
+
 
   build_project1:
     needs: detect_changes
