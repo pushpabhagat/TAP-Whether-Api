@@ -46,6 +46,10 @@ jobs:
               echo "Matched weatherapi directory for file: $file"
               project1_changed=true
             fi
+            if [[ "$file" == weatherapi/* ]]; then
+              echo "Matched weatherapi directory for file: $file"
+              project1_changed=true
+            fi
             if [[ "$file" == *"weatherapi.csproj"* ]]; then
               echo "Matched weatherapi.csproj for file: $file"
               project1_changed=true
