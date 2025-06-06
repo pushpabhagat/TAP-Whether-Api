@@ -40,10 +40,10 @@ jobs:
           project2_changed=false
 
           for file in $CHANGED_FILES; do
-            if [[ "$file" == *"wheatherapi.csproj"* ]]; then
+            if [[ "$file" == "wheatherapi/**" ]]; then
               project1_changed=true
             fi
-            if [[ "$file" == *"cicdapi.csproj"* ]]; then
+            if [[ "$file" == "cicdapi/**" ]]; then
               project2_changed=true
             fi
           done
