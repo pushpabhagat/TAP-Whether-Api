@@ -112,32 +112,37 @@ jobs:
     - name: Test - Project 2
       run: dotnet test ./cicdapi/cicdapi.csproj --no-build --verbosity normal
  
-  release:
-    needs:
-      - detect_changes
-      - build_project1
-      - build_project2
-       
-    if: >
-        needs.detect_changes.outputs.project1_changed == 'true' ||
-        needs.detect_changes.outputs.project2_changed == 'true'
+  # Release job for Project 1
+  release_project1:
+    needs: build_project1
     runs-on: ubuntu-latest
+    if: success()  # Only run if the build was successful
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
- 
-    - name: Create Release Notes
-      run: echo "Release triggered due to changes in projects."
- 
-    # Example: Create GitHub Release (adjust as needed - requires repo token)
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
-      if: github.event_name == 'push'
-      with:
-        tag_name: 'v1.${{ github.run_number }}'
-        name: 'Automated Release v1.${{ github.run_number }}'
-        body: 'This release contains builds for updated projects.'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
- 
-    # You can add artifact publishing, deployment steps etc. here
+      - name: Download Project 1 artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: project1-artifact
+          path: ./weatherapi/weatherapi/weatherapi.csproj
+
+      - name: Release Project 1
+        run: |
+          echo "Releasing Project 1..."
+          ls -l ./release/project1
+          # Add your project-specific release deployment or packaging commands here
+
+  # Release job for Project 2
+  release_project2:
+    needs: build_project2
+    runs-on: ubuntu-latest
+    if: success()  # Only run if the build was successful
+    steps:
+      - name: Download Project 2 artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: project2-artifact
+          path: ./cicdapi/cicdapi.csproj
+
+      - name: Release Project 2
+        run: |
+          echo "Releasing Project 2..."
+          ls -l ./release/project2
