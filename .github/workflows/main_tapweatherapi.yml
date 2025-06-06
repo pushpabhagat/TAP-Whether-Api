@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - './wheatherapi/wheatherapi/wheatherapi.csproj'
-      - './cicdapi/cicdapi.csproj'
+      - './wheatherapi/'
+      - './cicdapi/'
   pull_request:
     branches:
       - main
     paths:
-       - './wheatherapi/wheatherapi/wheatherapi.csproj'
-       - './cicdapi/cicdapi.csproj'
+       - './wheatherapi'
+       - './cicdapi'
  
 jobs:
   detect_changes:
