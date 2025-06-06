@@ -42,9 +42,11 @@ jobs:
           for file in $CHANGED_FILES; do
             if [[ "$file" == *"weatherapi.csproj"* ]]; then
               project1_changed=true
+              echo "project1_changed=true" >> $GITHUB_OUTPUT
             fi
             if [[ "$file" == *"cicdapi.csproj"* ]]; then
               project2_changed=true
+              echo "project2_changed=true" >> $GITHUB_OUTPUT
             fi
           done
 
