@@ -139,6 +139,15 @@ jobs:
           ls -l ./release/project1
           # Add your project-specific release deployment or packaging commands here
 
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'tapweatherapi'
+          publish-profile: ${{ secrets.PUSHSECRET }}
+          package: .
+
+     
   # Release job for Project 2
   release_project2:
     needs: build_project2
@@ -160,6 +169,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'tapweatherapi'
-          publish-profile: ${{ secrets.PUSHSECRET }}
+          app-name: 'tapcicdapi'
+          publish-profile: ${{ secrets.CICDSECRET }}
           package: .
