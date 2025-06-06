@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'wheatherapi/wheatherapi/wheatherapi.csproj'
+       - 'weatherapi/wheatherapi/wheatherapi.csproj'
+       - 'weatherapi/**'
   pull_request:
     branches:
       - main
