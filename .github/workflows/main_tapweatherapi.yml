@@ -11,7 +11,7 @@ on:
     branches:
       - main
     paths:
-       - 'wheatherapi/**'
+       - 'weatherapi/**'
        - 'cicdapi/**'
  
 jobs:
@@ -40,10 +40,10 @@ jobs:
           project2_changed=false
 
           for file in $CHANGED_FILES; do
-            if [[ "$file" == "wheatherapi.csproj" ]]; then
+            if [[ "$file" == *"weatherapi.csproj"* ]]; then
               project1_changed=true
             fi
-            if [[ "$file" == "cicdapi.csproj" ]]; then
+            if [[ "$file" == *"cicdapi.csproj"* ]]; then
               project2_changed=true
             fi
           done
@@ -73,7 +73,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '8.0.x'
  
     - name: Restore dependencies - Project 1
       run: dotnet restore ./wheather/wheather/wheatherapi.csproj
@@ -95,7 +95,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '8.0.x'
  
     - name: Restore dependencies - Project 2
       run: dotnet restore ./cicdapi/cicdapi.csproj
