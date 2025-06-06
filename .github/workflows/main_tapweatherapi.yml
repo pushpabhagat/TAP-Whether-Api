@@ -21,45 +21,46 @@ jobs:
       project1_changed: ${{ steps.detect.outputs.project1_changed }}
       project2_changed: ${{ steps.detect.outputs.project2_changed }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 2
- 
-    - name: Detect changed projects
-      id: detect
-      run: |
-        echo "Detecting modified files compared to previous commit"
-        # Get list of changed files between last two commits on branch
-        CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
- 
-        echo "Changed files:"
-        echo "$CHANGED_FILES"
- 
-        project1_changed=false
-        project2_changed=false
- 
-        for file in $CHANGED_FILES; do
-          if [[ "$file" == *"wheatherapi.csproj"* ]]; then
-            project1_changed=true
-            echo "::set-output name=project1_changed::$project1_changed"
-          fi
-          if [[ "$file" == *"cicdapi.csproj"* ]]; then
-            project2_changed=true
-              echo "::set-output name=project2_changed::$project2_changed"
- 
-          fi
-        done
- 
-        echo "project1_changed=$project1_changed" >> $GITHUB_ENV
-        echo "project2_changed=$project2_changed" >> $GITHUB_ENV
-        echo "::set-output name=project1_changed::$project1_changed"
-        echo "::set-output name=project2_changed::$project2_changed"
- 
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed projects
+        id: detect
+        run: |
+          echo "Detecting modified files compared to previous commit"
+          # Get list of changed files between last two commits on branch
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          project1_changed=false
+          project2_changed=false
+
+          for file in $CHANGED_FILES; do
+            if [[ "$file" == *"wheatherapi.csproj"* ]]; then
+              project1_changed=true
+            fi
+            if [[ "$file" == *"cicdapi.csproj"* ]]; then
+              project2_changed=true
+            fi
+          done
+
+          # Set outputs for the job using environment files
+          echo "project1_changed=$project1_changed" >> $GITHUB_ENV
+          echo "project2_changed=$project2_changed" >> $GITHUB_ENV
+
+          # Set outputs for the job
+          echo "project1_changed=$project1_changed" >> $GITHUB_OUTPUT
+          echo "project2_changed=$project2_changed" >> $GITHUB_OUTPUT
+
   build_project1:
     needs: detect_changes
     if: needs.detect_changes.outputs.project1_changed == 'true'
     runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
