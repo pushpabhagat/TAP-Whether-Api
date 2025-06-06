@@ -86,25 +86,19 @@ jobs:
  
     - name: Build - Project 1
       run: dotnet build ./weatherapi/weatherapi/weatherapi.csproj --configuration Release --no-restore
+   
+    - name: dotnet publish
+      run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj
 
     - name: Upload Project 1 Artifact
       uses: actions/upload-artifact@v4
       with:
           name: project1-artifact
           path: ./weatherapi/weatherapi/weatherapi.csproj  # Adjust the path as needed
-   
+          
     - name: Test - Project 1
       run: dotnet test ./weatherapi/weatherapi/weatherapi.csproj --no-build --verbosity normal
-
-    - name: dotnet publish
-      run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v4
-      with:
-          name: .net-app
-          path: ./weatherapi/weatherapi/weatherapi.csproj
-          
+      
   build_project2:
     needs: detect_changes
     if: needs.detect_changes.outputs.project2_changed == 'true'
@@ -123,7 +117,16 @@ jobs:
  
     - name: Build - Project 2
       run: dotnet build ./cicdapi/cicdapi.csproj --configuration Release --no-restore
- 
+
+    - name: dotnet publish
+      run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj
+      
+    - name: Upload Project 1 Artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: project1-artifact
+          path: ./weatherapi/weatherapi/weatherapi.csproj  # Adjust the path as needed
+          
     - name: Test - Project 2
       run: dotnet test ./cicdapi/cicdapi.csproj --no-build --verbosity normal
  
