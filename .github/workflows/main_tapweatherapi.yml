@@ -139,11 +139,7 @@ jobs:
           name: project1-artifact
           path: ./weatherapi/weatherapi/weatherapi.csproj
 
-      - name: Release Project 1
-        run: |
-          echo "Releasing Project 1..."
-          ls -l ./release/project1
-          # Add your project-specific release deployment or packaging commands here
+     
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
