@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'wheatherapi/**'
+      - './wheatherapi'
   pull_request:
     branches:
       - main
