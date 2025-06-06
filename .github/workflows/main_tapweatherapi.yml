@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - 'path/to/project1/**'
-      - 'path/to/project2/**'
+      - '**/wheatherapi.csproj'
+      - '**/cicdapi.csproj'
   pull_request:
     branches:
       - main
     paths:
-      - 'path/to/project1/**'
-      - 'path/to/project2/**'
+      - '**/wheatherapi.csproj'
+      - '**/cicdapi.csproj'
  
 jobs:
   detect_changes:
