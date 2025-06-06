@@ -91,7 +91,7 @@ jobs:
       run: dotnet test ./weatherapi/weatherapi/weatherapi.csproj --no-build --verbosity normal
 
     - name: dotnet publish
-      run: dotnet publish -c Debug -o ./weatherapi/weatherapi/weatherapi.csproj
+      run: dotnet publish ./weatherapi/weatherapi/weatherapi.csproj
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v4
