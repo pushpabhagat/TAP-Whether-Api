@@ -113,9 +113,9 @@ jobs:
       - detect_changes
       - build_project1
       - build_project2
-    if: >
-      needs.detect_changes.outputs.project1_changed == 'true' ||
-      needs.detect_changes.outputs.project2_changed == 'true'
+       
+    if: needs.detect_changes.outputs.project1_changed == 'true' ||
+        needs.detect_changes.outputs.project2_changed == 'true'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
