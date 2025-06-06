@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - './wheatherapi/**'
-      - './cicdapi/**'
+      - 'wheatherapi/**'
   pull_request:
     branches:
       - main
