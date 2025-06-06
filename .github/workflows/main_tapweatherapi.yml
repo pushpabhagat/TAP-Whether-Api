@@ -42,14 +42,17 @@ jobs:
         for file in $CHANGED_FILES; do
           if [[ "$file" == **/wheatherapi.csproj ]]; then
             project1_changed=true
+            echo "::set-output name=project1_changed::$project1_changed"
           fi
           if [[ "$file" == **/cicdapi.csproj ]]; then
             project2_changed=true
+              echo "::set-output name=project2_changed::$project2_changed"
+ 
           fi
         done
  
-        echo "::set-output name=project1_changed::$project1_changed"
-        echo "::set-output name=project2_changed::$project2_changed"
+      #  echo "::set-output name=project1_changed::$project1_changed"
+      #  echo "::set-output name=project2_changed::$project2_changed"
  
   build_project1:
     needs: detect_changes
