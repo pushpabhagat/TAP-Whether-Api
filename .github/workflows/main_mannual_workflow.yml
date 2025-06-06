@@ -1,0 +1,103 @@
+name: Build and Release Projects
+ 
+on:
+  workflow_dispatch:
+ 
+env:
+  NODE_VERSION: '16'
+  PYTHON_VERSION: '3.9'
+ 
+jobs:
+  # Build job for Project 1 (Node.js)
+  build_project1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+ 
+      - name: Install dependencies for Project 1
+        working-directory: ./project1
+        run: npm install
+ 
+      - name: Build Project 1
+        working-directory: ./project1
+        run: npm run build
+ 
+      - name: Run Project 1 tests
+        working-directory: ./project1
+        run: npm test
+ 
+      - name: Upload Project 1 build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: project1-build
+          path: ./project1/build
+ 
+  # Build job for Project 2 (Python)
+  build_project2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+ 
+      - name: Install dependencies for Project 2
+        working-directory: ./project2
+        run: pip install -r requirements.txt
+ 
+      - name: Run Project 2 tests
+        working-directory: ./project2
+        run: pytest
+ 
+      - name: Upload Project 2 test report artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: project2-test-report
+          path: ./project2/tests/reports
+ 
+  # Release job for Project 1, dependent on build_project1
+  release_project1:
+    needs: build_project1
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Download Project 1 build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: project1-build
+          path: ./release/project1
+ 
+      - name: Release Project 1
+        run: |
+          echo "Releasing Project 1..."
+          # Add your release commands here, for example:
+          # deploy to server, publish to registry, etc.
+          ls -l ./release/project1
+ 
+  # Release job for Project 2, dependent on build_project2
+  release_project2:
+    needs: build_project2
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Download Project 2 test report artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: project2-test-report
+          path: ./release/project2
+ 
+      - name: Release Project 2
+        run: |
+          echo "Releasing Project 2..."
+          # Add your release commands here, for example:
+          # create release, upload to PyPI, deploy, etc.
+          ls -l ./release/project2
