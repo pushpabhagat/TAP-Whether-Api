@@ -1,7 +1,6 @@
 //this is to check if workflow run successfully
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add services to the container.
 builder.Services.AddControllers();
 
