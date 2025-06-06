@@ -40,10 +40,10 @@ jobs:
         project2_changed=false
  
         for file in $CHANGED_FILES; do
-          if [[ "$file" == path/to/project1/* ]]; then
+          if [[ "$file" == **/wheatherapi.csproj ]]; then
             project1_changed=true
           fi
-          if [[ "$file" == path/to/project2/* ]]; then
+          if [[ "$file" == **/cicdapi.csproj ]]; then
             project2_changed=true
           fi
         done
@@ -65,13 +65,13 @@ jobs:
         dotnet-version: '6.0.x'
  
     - name: Restore dependencies - Project 1
-      run: dotnet restore path/to/project1/project1.csproj
+      run: dotnet restore ./wheather/wheather/wheatherapi.csproj
  
     - name: Build - Project 1
-      run: dotnet build path/to/project1/project1.csproj --configuration Release --no-restore
+      run: dotnet build ./wheather/wheather/wheatherapi.csproj --configuration Release --no-restore
  
     - name: Test - Project 1
-      run: dotnet test path/to/project1/project1.csproj --no-build --verbosity normal
+      run: dotnet test ./wheather/wheather/wheatherapi.csproj --no-build --verbosity normal
  
   build_project2:
     needs: detect_changes
@@ -87,13 +87,13 @@ jobs:
         dotnet-version: '6.0.x'
  
     - name: Restore dependencies - Project 2
-      run: dotnet restore path/to/project2/project2.csproj
+      run: dotnet restore ./cicdapi/cicdapi.csproj
  
     - name: Build - Project 2
-      run: dotnet build path/to/project2/project2.csproj --configuration Release --no-restore
+      run: dotnet build ./cicdapi/cicdapi.csproj --configuration Release --no-restore
  
     - name: Test - Project 2
-      run: dotnet test path/to/project2/project2.csproj --no-build --verbosity normal
+      run: dotnet test ./cicdapi/cicdapi.csproj --no-build --verbosity normal
  
   release:
     needs:
