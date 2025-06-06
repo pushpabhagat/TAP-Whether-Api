@@ -138,22 +138,22 @@ jobs:
  
   # Release job for Project 1
   release_project1:
-    needs: build_project1
-    runs-on: ubuntu-latest
-    if: success()  # Only run if the build was successful
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: output
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'tapweatherapi'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.PUSHSECRET }}
-          package: ${{ github.workspace }}/
+   needs: build_project1
+   runs-on: ubuntu-latest
+   if: success()  # Only run if the build was successful
+   steps:
+     - name: Download artifact from build job
+       uses: actions/download-artifact@v4
+       with:
+         name: project1-artifact  # Use the same name as in the upload step
+ 
+     - name: Deploy to Azure Web App
+       uses: azure/webapps-deploy@v3
+       with:
+         app-name: 'tapweatherapi'
+         slot-name: 'Production'
+         publish-profile: ${{ secrets.PUSHSECRET }}
+         package: ${{ github.workspace }}/  # Adjust this path if necessary
 
      
   # Release job for Project 2
