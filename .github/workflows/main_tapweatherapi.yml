@@ -51,8 +51,8 @@ jobs:
           fi
         done
  
-      #  echo "::set-output name=project1_changed::$project1_changed"
-      #  echo "::set-output name=project2_changed::$project2_changed"
+        echo "project1_changed=$project1_changed" >> $GITHUB_ENV
+        echo "project2_changed=$project2_changed" >> $GITHUB_ENV
  
   build_project1:
     needs: detect_changes
