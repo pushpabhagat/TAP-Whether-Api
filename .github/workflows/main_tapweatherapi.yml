@@ -119,7 +119,7 @@ jobs:
     if: success()  # Only run if the build was successful
     steps:
       - name: Download Project 1 artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: project1-artifact
           path: ./weatherapi/weatherapi/weatherapi.csproj
@@ -137,7 +137,7 @@ jobs:
     if: success()  # Only run if the build was successful
     steps:
       - name: Download Project 2 artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: project2-artifact
           path: ./cicdapi/cicdapi.csproj
@@ -146,3 +146,11 @@ jobs:
         run: |
           echo "Releasing Project 2..."
           ls -l ./release/project2
+          
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'tapweatherapi'
+          publish-profile: ${{ secrets.PUSHSECRET }}
+          package: .
