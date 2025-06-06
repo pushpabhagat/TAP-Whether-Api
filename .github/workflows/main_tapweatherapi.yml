@@ -49,21 +49,21 @@ jobs:
           done
 
           # Set outputs for the job only if they are true
-          if [ "$project1_changed" = true ]; then
-            echo "project1_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "project1_changed=false" >> $GITHUB_OUTPUT
-          fi
+         # if [ "$project1_changed" = true ]; then
+         #   echo "project1_changed=true" >> $GITHUB_OUTPUT
+         # else
+        #    echo "project1_changed=false" >> $GITHUB_OUTPUT
+       #   fi
 
-          if [ "$project2_changed" = true ]; then
-            echo "project2_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "project2_changed=false" >> $GITHUB_OUTPUT
-          fi
+          # if [ "$project2_changed" = true ]; then
+           # echo "project2_changed=true" >> $GITHUB_OUTPUT
+          # else
+          #  echo "project2_changed=false" >> $GITHUB_OUTPUT
+          # fi
 
   build_project1:
     needs: detect_changes
-    if: needs.detect_changes.outputs.project1_changed == 'project1_changed'
+    if: needs.detect_changes.outputs.project1_changed == 'true'
     runs-on: ubuntu-latest
     
     steps:
