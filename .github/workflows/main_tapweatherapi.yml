@@ -42,15 +42,15 @@ jobs:
 
           for file in $CHANGED_FILES; do
             echo "Checking file: $file"
-           
-            if [[ "$file" == *"weatherapi.csproj"* ]]; then
-              echo "Matched weatherapi.csproj for file: $file"
+             if [[ "$file" == weatherapi/* ]]; then
+              echo "Matched weatherapi directory for file: $file"
               project1_changed=true
             fi
-            if [[ "$file" == *"cicdapi.csproj"* ]]; then
-              echo "Matched cicdapi.csproj for file: $file"
-              project2_changed=true
+            if [[ "$file" == cicdapi/* ]]; then
+              echo "Matched weatherapi directory for file: $file"
+              project1_changed=true
             fi
+            
           done
 
           echo "Final project1_changed: $project1_changed"
